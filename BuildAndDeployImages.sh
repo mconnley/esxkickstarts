@@ -5,9 +5,9 @@ pwsh ./BuildESXiImage.ps1
 sudo mkdir /esxi_build_cdrom_mount
 sudo mkdir /esxi_files
 sudo mount -t iso9660 -o loop,ro ImageBuildOnly-iso-image.iso /esxi_build_cdrom_mount
-cp -r /esxi_build_cdrom_mount/* /esxi_files
-sed -i -e 's/cdromBoot/ks=cdrom:\/KS.CFG/g'  /esxi_files/boot.cfg
-sed -i -e 's/cdromBoot/ks=cdrom:\/KS.CFG/g'  /esxi_files/efi/boot/boot.cfg
+sudo cp -r /esxi_build_cdrom_mount/* /esxi_files
+sudo sed -i -e 's/cdromBoot/ks=cdrom:\/KS.CFG/g'  /esxi_files/boot.cfg
+sudo sed -i -e 's/cdromBoot/ks=cdrom:\/KS.CFG/g'  /esxi_files/efi/boot/boot.cfg
 
 FILES="./VMHOST*.CFG"
 for f in $FILES
@@ -16,9 +16,9 @@ do
        IFS='-' read -ra NAME <<< "$f"
        hn1=${NAME[0]}
        hn=${hn1/"./"/""}
-       \cp $f /esxi_files/KS.CFG
+       sudo \cp $f /esxi_files/KS.CFG
        fn="$hn-esxi.iso"
-       genisoimage -relaxed-filenames -J -R -o $fn -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e efiboot.img -no-emul-boot /esxi_files
+       sudo genisoimage -relaxed-filenames -J -R -o $fn -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e efiboot.img -no-emul-boot /esxi_files
        echo "Wrote $fn"
 done
 
