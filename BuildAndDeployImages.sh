@@ -24,7 +24,7 @@ done
 
 sudo rm -rf /esxi_files
 sudo umount /esxi_build_cdrom_mount
-sudo rm -r /esxi_build_cdrom_mount
+sudo rm -rf /esxi_build_cdrom_mount
 
 sshpass -f pikvmpass ssh -o StrictHostKeyChecking=no root@pikvm kvmd-helper-otgmsd-remount rw
 sshpass -f pikvmpass ssh -o StrictHostKeyChecking=no root@pikvm rm /var/lib/kvmd/msd/.__VMHOST*.complete -f
