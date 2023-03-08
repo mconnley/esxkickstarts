@@ -1,10 +1,10 @@
 #!/bin/bash
 
-rm -f ImageBuildOnly-*
+sudo rm -f ImageBuildOnly-*
 pwsh ./BuildESXiImage.ps1
-mkdir /esxi_build_cdrom_mount
-mkdir /esxi_files
-mount -t iso9660 -o loop,ro ImageBuildOnly-iso-image.iso /esxi_build_cdrom_mount
+sudo mkdir /esxi_build_cdrom_mount
+sudo mkdir /esxi_files
+sudo mount -t iso9660 -o loop,ro ImageBuildOnly-iso-image.iso /esxi_build_cdrom_mount
 cp -r /esxi_build_cdrom_mount/* /esxi_files
 sed -i -e 's/cdromBoot/ks=cdrom:\/KS.CFG/g'  /esxi_files/boot.cfg
 sed -i -e 's/cdromBoot/ks=cdrom:\/KS.CFG/g'  /esxi_files/efi/boot/boot.cfg
@@ -22,9 +22,9 @@ do
        echo "Wrote $fn"
 done
 
-rm -rf /esxi_files
-umount /esxi_build_cdrom_mount
-rm -r /esxi_build_cdrom_mount
+sudo rm -rf /esxi_files
+sudo umount /esxi_build_cdrom_mount
+sudo rm -r /esxi_build_cdrom_mount
 
 sshpass -f pikvmpass ssh -o StrictHostKeyChecking=no root@pikvm kvmd-helper-otgmsd-remount rw
 sshpass -f pikvmpass ssh -o StrictHostKeyChecking=no root@pikvm rm /var/lib/kvmd/msd/.__VMHOST*.complete -f
