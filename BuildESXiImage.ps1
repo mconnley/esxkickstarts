@@ -7,7 +7,7 @@ $esxiComponentVersion = "1.11-1vmw"
 
 
 $esxiBaseImage = Get-LcmImage -Type BaseImage -Version $esxiImageName
-$esxiComponent = Get-LcmImage -Type Component | where {$_.Name -eq $esxiComponentName -and $_.Version -eq $esxiComponentVersion}
+$esxiComponent = Get-LcmImage -Type Component | Where-Object {$_.Name -eq $esxiComponentName -and $_.Version -eq $esxiComponentVersion}
 
 New-Cluster -Name $clusterName -BaseImage $esxiBaseImage -Location (Get-Datacenter -Name $datacenterName)
 Get-Cluster -Name $clusterName | Set-Cluster -Component @($esxiComponent) -BaseImage $esxiBaseImage -Confirm:$false
