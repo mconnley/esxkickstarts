@@ -1,9 +1,9 @@
 Connect-VIServer -Server vc8.mattconnley.com -user administrator@vsphere.local
 $datacenterName = "HomeLab"
 $clusterName = "ImageBuildOnly"
-$esxiImageName = "8.0 U1c - 22088125"
+$esxiImageName = "8.0 U2 - 22380479"
 $esxiComponentName = "VMware USB NIC Fling Driver"
-$esxiComponentVersion = "1.12-1vmw"
+$esxiComponentVersion = "1.12-2vmw"
 
 
 $esxiBaseImage = Get-LcmImage -Type BaseImage -Version $esxiImageName
